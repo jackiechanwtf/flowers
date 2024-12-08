@@ -1,0 +1,199 @@
+/* Заголовки */
+h1 {
+    font-size: 16pt;
+    color: blue;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 14pt;
+    color: red;
+}
+
+label {
+    font-size: 14pt;
+    color: red;
+}
+
+/* Стили для таблиц */
+td {
+    font-family: 'Verdana';
+    font-size: 12pt;
+    color: blue;
+}
+
+td.border {
+    font-family: 'Verdana';
+    font-weight: bold;
+    font-size: 12pt;
+    color: black;
+}
+
+/* Стиль для кнопки submit */
+input.submit {
+    color: blue;
+    font-weight: bold;
+}
+
+/* Новый стиль для изображений */
+.card img {
+    width: 200px;      /* Устанавливаем фиксированную ширину */
+    height: 200px;     /* Устанавливаем фиксированную высоту */
+    object-fit: cover; /* Изображение обрезается с сохранением пропорций */
+    border-radius: 8px; /* Добавим закругленные углы для улучшения внешнего вида */
+}
+
+/* Стили для контейнера с карточками */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: stretch; /* Выравниваем элементы по высоте */
+    padding-top: 20px;
+    padding-bottom: 70px;
+}
+/* Стиль для карточки */
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 220px; /* Устанавливаем фиксированную ширину карточки */
+    padding: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Выравнивание содержимого по высоте */
+    height: 350px; /* Устанавливаем одинаковую высоту для всех карточек */
+}
+
+
+/* Рамка для изображения, если фото отсутствует */
+.image-frame {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #888;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+/* Контейнер для управления корзиной */
+.cart-controls {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Стили для кнопки "Добавить в корзину" */
+.add-to-cart {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-to-cart:hover {
+    background-color: #45a049;
+}
+
+/* Стили для ввода количества */
+.quantity-input {
+    width: 30px;
+    padding: 4px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/* Стили для кнопки корзины */
+.cart-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    color: #4CAF50;
+    border: 2px solid #4CAF50; /* Зеленая рамка */
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.cart-button img {
+    width: 24px; /* Размер изображения */
+    height: 24px; /* Размер изображения */
+    margin-right: 8px; /* Отступ между изображением и текстом */
+}
+
+.cart-button i {
+    font-size: 24px;
+}
+
+.cart-button:hover {
+    background-color: #f0f0f0;
+}
+
+.back-button {
+    display: inline-block;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000; /* Делаем кнопку видимой поверх контента */
+}
+
+.back-button:hover {
+    background-color: #45a049;
+}
+
+.flash-messages {
+    position: fixed;
+    top: 10px; /* Расположение сверху */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Смещение для точного центрирования по горизонтали */
+    z-index: 1000;
+    max-width: 300px;
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+.flash-message {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}

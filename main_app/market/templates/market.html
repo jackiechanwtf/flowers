@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Market</title>
+    <link rel="stylesheet" href="/static/main.css">
+</head>
+<body>
+    <h1>Каталог цветов</h1>
+    <a href="/cart" class="cart-button">
+        <img src="/static/icons/cart.png" alt="Корзина">
+        Корзина
+    </a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        {% for bouquet in bouquets %}
+        <div class="card">
+            {% if bouquet['image_exists'] %}
+            <img src="/static/images/{{ bouquet['bouq_name'] }}.png" alt="{{ bouquet['bouq_name'] }}">
+            {% else %}
+            <div class="image-frame">Фото в обработке</div>
+            {% endif %}
+            <h3>{{ bouquet['bouq_name'] }}</h3>
+            <p>Цена: {{ bouquet['bouq_price'] }} Р</p>
+            <form action="/market/add_to_cart" method="post" class="cart-controls">
+                <input type="hidden" name="bouq_id" value="{{ bouquet['bouq_id'] }}">
+                <input type="hidden" name="bouq_name" value="{{ bouquet['bouq_name'] }}">
+                <input type="hidden" name="bouq_price" value="{{ bouquet['bouq_price'] }}">
+                <label for="quantity_{{ loop.index }}">Количество:</label>
+                <input type="number" id="quantity_{{ loop.index }}" name="quantity" min="1" value="1" class="quantity-input">
+                <button type="submit" name="add_to_cart">Добавить</button>
+            </form>
+        </div>
+        {% endfor %}
+        <a href="/" class="back-button">Вернуться на главную страницу</a>
+    </div>
+</body>
+</html>

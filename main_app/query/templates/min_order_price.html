@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Минимальная цена заказа</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <h1>Минимальная цена заказа</h1>
+
+    <form method="POST" action="{{ url_for('bp_query.min_order_price') }}">
+        <label for="year">Год:</label>
+        <input type="number" name="year" id="year" min="2000" max="2100" required>
+
+        <button type="submit">Выполнить запрос</button>
+    </form>
+
+    {% if result %}
+        <h2>Результат:</h2>
+        <p>Минимальная цена: {{ result[0]['min_price'] }}</p>
+    {% endif %}
+
+
+    <a href="{{ url_for('bp_query.query_page') }}">Назад</a>
+</body>
+</html>

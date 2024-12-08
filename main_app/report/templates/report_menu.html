@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Работа с отчётами</title>
+</head>
+<body>
+    <h1>Работа с отчётами</h1>
+    <p>
+    <a href="{{ url_for('bp_report.choose_report', action='create') }}">
+        <button>Создать отчёт</button>
+    </a>
+    </p>
+    <p>
+    <a href="{{ url_for('bp_report.choose_report', action='view') }}">
+        <button>Посмотреть отчёты</button>
+    </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('menu_choice') }}">
+            <button>Назад в меню</button>
+        </a>
+    </p>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+    "admin": ["reports"],
+    "dispatcher": ["delivery", "orders"],
+    "manager": ["reports", "queries"]
+}

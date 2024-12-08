@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="/static/main.css">
+</head>
+<body>
+    <h1>Корзина</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% if cart_items %}
+    <ul>
+        {% for item in cart_items %}
+        <li>
+            <strong>{{ item['bouq_name'] }}</strong>
+            — {{ item['quantity'] }} шт.
+            ({{ item['bouq_price'] * item['quantity'] }} Р)
+            <form action="/cart" method="post" style="display: inline;">
+                <input type="hidden" name="bouq_id" value="{{ item['bouq_id'] }}">
+                <input type="hidden" name="bouq_name" value="{{ item['bouq_name'] }}">
+                <button type="submit" name="remove_from_cart">Удалить</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Форма оформления заказа -->
+    <form method="post">
+        <h2>Оформление заказа</h2>
+        <label for="delivery_date">Дата доставки:</label>
+        <input type="date" id="delivery_date" name="delivery_date" required>
+
+        <label for="delivery_time">Время доставки:</label>
+        <input type="time" id="delivery_time" name="delivery_time" required>
+
+        <label for="delivery_address">Адрес доставки:</label>
+        <input type="text" id="delivery_address" name="delivery_address" required>
+
+        <button type="submit" name="checkout">Оформить заказ</button>
+    </form>
+    {% else %}
+    <p>Ваша корзина пуста.</p>
+    {% endif %}
+
+    <a href="/market" class="back-button">Вернуться в магазин</a>
+</body>
+</html>

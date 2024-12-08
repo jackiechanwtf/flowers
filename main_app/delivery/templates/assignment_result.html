@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результат назначения курьера</title>
+</head>
+<body>
+    <h1>Результат назначения курьера</h1>
+
+    <p>Заказ с ID: {{ order_info.order_id }} был успешно обработан.</p>
+    <p>Курьер: {{ order_info.cour_name }} с ID: {{ order_info.cour_id }} назначен на этот заказ.</p>
+    <p>Телефон курьера: {{ order_info.cour_phone }}</p>
+    <p>Дата заказа: {{ order_info.creation_date }}</p>
+
+    <h2>Информация о доставке</h2>
+    <p>Дата доставки: {{ order_info.del_date }}</p>
+    <p>Время доставки: {{ order_info.delivery_time }}</p>
+    <p>Место доставки: {{ order_info.delivery_place }}</p>
+
+    <a href="{{ url_for('bp_delivery.orders_page') }}">Вернуться к списку заказов</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простые запросы</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <h1>Простые запросы</h1>
+
+    <ul>
+        <li><a href="{{ url_for('bp_query.clients_by_period') }}">Клиенты за период</a></li>
+        <li><a href="{{ url_for('bp_query.min_order_price') }}">Минимальная цена заказа</a></li>
+        <li><a href="{{ url_for('bp_query.couriers_no_orders') }}">Курьеры без заказов</a></li>
+    </ul>
+
+    <a href="/">Назад</a>
+</body>
+</html>
