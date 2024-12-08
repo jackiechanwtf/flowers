@@ -1,14 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Просмотр отчёта по букетам</title>
+    <title>Все отчёты</title>
 </head>
 <body>
-    <h1>Просмотр отчёта по букетам</h1>
-    <p>Здесь будет отображаться отчёт по букетам.</p>
-    <a href="{{ url_for('bp_report.choose_report') }}">
+    <h1>Все отчёты</h1>
+    <form method="POST" action="{{ url_for('bp_report.view_report_for_bouqets') }}">
+        <label for="month">Месяц:</label>
+        <input type="number" name="month" id="month" min="1" max="12" required>
+
+        <label for="year">Год:</label>
+        <input type="number" name="year" id="year" min="2000" max="2100" required>
+
+        <button type="submit">Выполнить запрос</button>
+    </form>
+
+    {% if records %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Номер букета</th>
+                    <th>Количество</th>
+                    <th>Общая стоимость</th>
+                    <th>Месяц отчета</th>
+                    <th>Год отчета</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    <tr>
+                        <td>{{ record.bouq_id }}</td>
+                        <td>{{ record.kolvo }}</td>
+                        <td>{{ record.total_price }}</td>
+                        <td>{{ record.rep_mon }}</td>
+                        <td>{{ record.rep_year }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нет данных для отображения.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('bp_report.start_report') }}">
         <button>Назад</button>
     </a>
 </body>

@@ -3,13 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Создание отчёта по курьерам</title>
+    <title>Создание отчёта</title>
 </head>
 <body>
-    <h1>Создание отчёта по курьерам</h1>
-    <p>Здесь можно будет реализовать функционал создания отчётов по курьерам.</p>
-    <a href="{{ url_for('bp_report.choose_report') }}">
-        <button>Назад</button>
-    </a>
+    <h1>Создать отчёт</h1>
+    <form action="{{ url_for('bp_report.create_report_for_couriers') }}" method="POST">
+        <p>
+            <label for="month_choice">Месяц:</label>
+            <select name="month_choice" id="month_choice" required>
+                <<option selected>-- Выберите месяц --</option>
+                <option value="01">Январь</option>
+                <option value="02">Февраль</option>
+                <option value="03">Март</option>
+                <option value="04">Апрель</option>
+                <option value="05">Май</option>
+                <option value="06">Июнь</option>
+                <option value="07">Июль</option>
+                <option value="08">Август</option>
+                <option value="09">Сентябрь</option>
+                <option value="10">Октябрь</option>
+                <option value="11">Ноябрь</option>
+                <option value="12">Декабрь</option>
+            </select>
+        </p>
+        <p>
+            <label for="year_choice">Год:</label>
+            <input type="number" name="year_choice" min="2000" max="{{ year }}" value="{{ year }}" required>
+        </p>
+        <button type="submit">Создать отчёт</button>
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <p>
+        <a href="{{ url_for('bp_report.start_report') }}">
+            <button>Назад</button>
+        </a>
+    </p>
 </body>
 </html>

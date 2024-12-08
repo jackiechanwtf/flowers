@@ -59,7 +59,7 @@ def report_total():
             year = request.form.get('year')
             print(month, year)
             # SQL-запрос для получения всех данных из таблицы report
-            sql = provider.get('report_total.sql', kwargs={'month': month, 'year': year})
+            sql = provider.get('bouq_report.sql', kwargs={'month': month, 'year': year})
 
             # Выполнение запроса
             records = select_dict(current_app.config['db_config'], sql)
@@ -83,37 +83,107 @@ def choose_report():
 
 
 
-@blueprint_report.route('/create/couriers', methods=['GET'])
+@blueprint_report.route('/create/couriers', methods=['GET', 'POST'])
 @login_required
 def create_report_for_couriers():
-    """
-    Создание отчёта по курьерам.
-    """
-    return render_template('create_for_couriers.html')
+    current_year = datetime.now().year
+
+    if request.method == 'GET':
+        return render_template('create_for_couriers.html', year=current_year)
+
+    try:
+        # Получаем данные из формы
+        month = int(request.form.get('month_choice'))
+        year = int(request.form.get('year_choice'))
+
+        # Вызываем хранимую процедуру
+        result = call_proc(current_app.config['db_config'], 'courier_report', month, year)
+
+        if result is None:
+            # Обработка ошибки дублирования (MySQL Error 1062)
+            message = f"Ошибка: отчёт за {month}/{year} уже существует."
+        else:
+            message = f"Отчёт за {month}/{year} успешно создан."
+    except pymysql.MySQLError as e:
+        if e.args[0] == 1062:  # Код ошибки дублирования
+            message = f"Ошибка: отчёт за {month}/{year} уже существует."
+        else:
+            message = f"Ошибка базы данных: {str(e)}"
+    except Exception as e:
+        message = f"Не получилось создать отчет, не выбран год/месяц"
+
+    return render_template('create_for_couriers.html', year=current_year, message=message)
 
 
-@blueprint_report.route('/create/bouquets', methods=['GET'])
+@blueprint_report.route('/create/bouquets', methods=['GET', 'POST'])
 @login_required
 def create_report_for_bouquets():
-    """
-    Создание отчёта по букетам.
-    """
-    return render_template('create_for_bouqets.html')
+    current_year = datetime.now().year
+
+    if request.method == 'GET':
+        return render_template('create_for_couriers.html', year=current_year)
+
+    try:
+        # Получаем данные из формы
+        month = int(request.form.get('month_choice'))
+        year = int(request.form.get('year_choice'))
+
+        # Вызываем хранимую процедуру
+        result = call_proc(current_app.config['db_config'], 'date_report', month, year)
+
+        if result is None:
+            # Обработка ошибки дублирования (MySQL Error 1062)
+            message = f"Ошибка: отчёт за {month}/{year} уже существует."
+        else:
+            message = f"Отчёт за {month}/{year} успешно создан."
+    except pymysql.MySQLError as e:
+        if e.args[0] == 1062:  # Код ошибки дублирования
+            message = f"Ошибка: отчёт за {month}/{year} уже существует."
+        else:
+            message = f"Ошибка базы данных: {str(e)}"
+    except Exception as e:
+        message = f"Не получилось создать отчет, не выбран год/месяц"
+
+    return render_template('create_for_bouqets.html', year=current_year, message=message)
 
 
-@blueprint_report.route('/view/couriers', methods=['GET'])
+@blueprint_report.route('/view/couriers', methods=['GET', 'POST'])
 @login_required
 def view_report_for_couriers():
-    """
-    Просмотр отчёта по курьерам.
-    """
+    if request.method == 'POST':
+        try:
+            month = request.form.get('month')
+            year = request.form.get('year')
+            print(month, year)
+            # SQL-запрос для получения всех данных из таблицы report
+            sql = provider.get('couriers_report.sql', kwargs={'month': month, 'year': year})
+
+            # Выполнение запроса
+            records = select_dict(current_app.config['db_config'], sql)
+
+            # Отправка данных на страницу
+            return render_template('view_for_couriers.html', records=records)
+        except Exception as e:
+            return f"Ошибка при выполнении запроса: {e}", 500
     return render_template('view_for_couriers.html')
 
 
-@blueprint_report.route('/view/bouquets', methods=['GET'])
+@blueprint_report.route('/view/bouqets', methods=['GET', 'POST'])
 @login_required
-def view_report_for_bouquets():
-    """
-    Просмотр отчёта по букетам.
-    """
+def view_report_for_bouqets():
+    if request.method == 'POST':
+        try:
+            month = request.form.get('month')
+            year = request.form.get('year')
+            print(month, year)
+            # SQL-запрос для получения всех данных из таблицы report
+            sql = provider.get('bouq_report.sql', kwargs={'month': month, 'year': year})
+
+            # Выполнение запроса
+            records = select_dict(current_app.config['db_config'], sql)
+
+            # Отправка данных на страницу
+            return render_template('view_for_bouqets.html', records=records)
+        except Exception as e:
+            return f"Ошибка при выполнении запроса: {e}", 500
     return render_template('view_for_bouqets.html')

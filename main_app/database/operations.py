@@ -88,8 +88,7 @@ def execute_update(db_config, sql, fetch_last_id=False):
 
             # Если нужно вернуть последний вставленный ID
             if fetch_last_id:
-                cursor.execute("SELECT LAST_INSERT_ID();")
-                last_insert_id = cursor.fetchone()[0]  # Получаем последний ID
+                last_insert_id = cursor.lastrowid
                 print(f"Last Insert ID: {last_insert_id}")
                 return last_insert_id
 
