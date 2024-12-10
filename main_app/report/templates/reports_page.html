@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчеты</title>
+</head>
+<body>
+    <h1>Работа с отчетами</h1>
+
+    <!-- Сообщение об ошибке или успехе -->
+    {% if message %}
+        <p><strong>{{ message }}</strong></p>
+    {% endif %}
+
+    <!-- Форма выбора параметров отчета -->
+    <form method="post">
+        <label for="month_choice">Месяц:</label>
+        <input type="number" id="month_choice" name="month_choice" min="1" max="12" required>
+
+        <label for="year_choice">Год:</label>
+        <input type="number" id="year_choice" name="year_choice" value="{{ year }}" required>
+
+        <label for="report_type">Тип отчета:</label>
+        <select id="report_type" name="report_type" required>
+            <option value="couriers">Отчет по курьерам</option>
+            <option value="bouquets">Отчет по букетам</option>
+        </select>
+
+        <!-- Кнопки в зависимости от роли -->
+        {% if user_group == 'manager' %}
+            <button type="submit" name="action" value="add">Создать отчет</button>
+        {% endif %}
+        {% if user_group in ['admin', 'manager'] %}
+            <button type="submit" name="action" value="view">Посмотреть отчет</button>
+        {% endif %}
+    </form>
+
+    <!-- Отображение результатов -->
+    {% if records %}
+        <h2>Результаты отчета</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in records[0].keys() %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    <tr>
+                        {% for value in record.values() %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+<a href="/">Назад</a>
+</body>
+</html>

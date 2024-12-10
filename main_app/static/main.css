@@ -63,6 +63,7 @@ input.submit {
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Выравнивание содержимого по высоте */
+    align-items: center ;
     height: 350px; /* Устанавливаем одинаковую высоту для всех карточек */
 }
 

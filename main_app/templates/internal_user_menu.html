@@ -3,7 +3,7 @@
 {% block internal_user %}
 <p align="center">
     {% if 'reports' in user_services %}
-        <a href="{{ url_for('bp_report.start_report') }}">Работа с отчетами</a><br><br>
+        <a href="{{ url_for('bp_report.reports_page') }}">Работа с отчетами</a><br><br>
     {% endif %}
     {% if 'queries' in user_services %}
         <a href="{{ url_for('bp_query.query_page') }}">Работа с запросами</a><br><br>

@@ -15,9 +15,15 @@ def cart():
         session['cart'] = []
 
     if request.method == 'POST':
+        # Обработка очистки корзины
+        if 'clear_cart' in request.form:
+            session['cart'] = []
+            session.modified = True
+            flash('Корзина была успешно очищена.', 'success')
+            return redirect('/cart')
+
         # Обработка удаления товара из корзины
-        if 'remove_from_cart' in request.form:
-            bouq_id = int(request.form['bouq_id'])
+        elif 'remove_from_cart' in request.form:
             bouq_name = request.form['bouq_name']
             session['cart'] = [item for item in session['cart'] if item['bouq_name'] != bouq_name]
             session.modified = True
@@ -26,32 +32,26 @@ def cart():
 
         # Обработка оформления заказа
         elif 'checkout' in request.form:
-            # Получаем данные из формы
-            del_date = request.form['delivery_date']
-            delivery_time = request.form['delivery_time']
-            delivery_place = request.form['delivery_address']
-            user_id = session.get('user_id')  # ID клиента из сессии
-
             try:
-                # Вставка записи в таблицу delivery
+                del_date = request.form['delivery_date']
+                delivery_time = request.form['delivery_time']
+                delivery_place = request.form['delivery_address']
+                user_id = session.get('user_id')  # ID клиента из сессии
+
                 sql_insert_delivery = sql_provider.get('insert_delivery.sql', {
                     'del_date': del_date,
                     'delivery_time': delivery_time,
                     'delivery_place': delivery_place
                 })
-                # Получаем последний ID вставленной записи delivery
                 delivery_id = execute_update(current_app.config['db_config'], sql_insert_delivery, fetch_last_id=True)
 
-                # Вставка записи в таблицу orders
                 sql_insert_order = sql_provider.get('insert_order.sql', {
                     'cl_id': user_id,
-                    'creation_date': 'CURDATE()',  # Текущая дата
+                    'creation_date': 'CURDATE()',
                     'delivery_id': delivery_id
                 })
-                # Получаем последний ID вставленной записи order
                 order_id = execute_update(current_app.config['db_config'], sql_insert_order, fetch_last_id=True)
 
-                #Вставка записей в таблицу compos
                 with DBContextManager(current_app.config['db_config']) as cursor:
                     if cursor is None:
                         raise ValueError('Cursor not found')
@@ -63,7 +63,6 @@ def cart():
                         })
                         cursor.execute(sql_insert_compos)
 
-                # Очистка корзины после успешного оформления заказа
                 session['cart'] = []
                 session.modified = True
                 flash(f'Заказ №{order_id} успешно оформлен!', 'success')

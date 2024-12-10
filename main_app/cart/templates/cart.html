@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Корзина</h1>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <div class="flash-messages">
@@ -19,7 +20,12 @@
     </div>
     {% endif %}
     {% endwith %}
+
     {% if cart_items %}
+    <form action="/cart" method="post" style="margin-bottom: 10px;">
+        <button type="submit" name="clear_cart">Очистить корзину</button>
+    </form>
+
     <ul>
         {% for item in cart_items %}
         <li>
