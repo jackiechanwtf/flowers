@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, current_app, session
 from database.operations import call_proc, select_dict
 from database.sql_provider import SQLProvider
+from database.connection import DBContextManager
 import os
 from datetime import datetime
 import pymysql
@@ -32,16 +33,40 @@ def reports_page():
             report_type = request.form.get('report_type')  # Тип отчета: "couriers" или "bouquets"
 
             if action == 'add' and user_group == 'manager':
-                if report_type == 'couriers':
-                    procedure_name = 'courier_report'
-                elif report_type == 'bouquets':
-                    procedure_name = 'date_report'
-                else:
-                    raise ValueError("Неверный тип отчета")
+                try:
+                    procedure_name = 'courier_report' if report_type == 'couriers' else 'date_report'
 
-                # Генерация отчета
-                call_proc(current_app.config['db_config'], procedure_name, month, year)
-                message = f"Отчет за {month}/{year} успешно создан."
+                    # Формируем SQL-запрос для проверки существования записи
+                    if report_type == 'couriers':
+                        sql_file = 'validate_courier_report.sql'
+                    elif report_type == 'bouquets':
+                        sql_file = 'validate_bouquet_report.sql'
+                    else:
+                        raise ValueError("Неверный тип отчета")
+
+                    # Выполняем проверочный запрос
+                    sql_query = provider.get(sql_file, kwargs={'month': month, 'year': year})
+                    result = select_dict(current_app.config['db_config'], sql_query)
+
+                    # Проверяем наличие записи
+                    if result and result[0]['record_count'] > 0:
+                        message = f"Отчет за {month}/{year} уже существует. Создание отменено."
+                    else:
+                        # Если записи нет, вызываем хранимую процедуру
+                        with DBContextManager(current_app.config['db_config']) as cursor:
+                            cursor.callproc(procedure_name, [month, year])
+
+                        # Повторно проверяем, добавлены ли данные
+                        result_after = select_dict(current_app.config['db_config'], sql_query)
+                        if result_after and result_after[0]['record_count'] > 0:
+                            message = f"Отчет за {month}/{year} успешно создан."
+                        else:
+                            message = f"Ошибка: отчет за {month}/{year} не был создан. Проверьте данные."
+                except Exception as e:
+                    message = f"Ошибка: {str(e)}"
+
+                #call_proc(current_app.config['db_config'], procedure_name, month, year)
+                #message = f"Отчет за {month}/{year} успешно создан."
 
             elif action == 'view' and user_group in ['admin', 'manager']:
                 # Формируем SQL-запрос на основе типа отчета
