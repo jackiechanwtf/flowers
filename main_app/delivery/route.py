@@ -31,7 +31,7 @@ def couriers_for_order(order_id):
     """
     try:
         # Получаем список свободных курьеров для указанного заказа
-        sql = provider.get('free_couriers.sql', kwargs={'order_id': order_id})  # Запрос для получения свободных курьеров
+        sql = provider.get('free_couriers.sql', kwargs={})  # Запрос для получения свободных курьеров
         couriers = select_dict(current_app.config['db_config'], sql)
         return render_template('couriers.html', couriers=couriers, order_id=order_id)
     except Exception as e:
@@ -69,7 +69,6 @@ def assign_courier():
 
         # Получаем информацию о заказе и курьере для отображения на странице
         sql_order_info = provider.get('get_order_info.sql', {'order_id': order_id, 'courier_id': courier_id})
-        print(sql_order_info)
         order_info = select_dict(current_app.config['db_config'], sql_order_info)
 
         if not order_info:
