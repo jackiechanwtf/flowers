@@ -18,8 +18,13 @@ def reports_page():
     Универсальная страница для работы с отчетами с учетом роли пользователя.
     """
     current_year = datetime.now().year
+    current_month = datetime.now().month
     message = None
     records = None
+
+    # Значения по умолчанию
+    month = current_month
+    year = current_year
 
     # Получаем роль пользователя из сессии
     user_group = session.get('user_group')  # По умолчанию роль "guest"
@@ -40,7 +45,7 @@ def reports_page():
                     if report_type == 'couriers':
                         sql_file = 'validate_courier_report.sql'
                     elif report_type == 'bouquets':
-                        sql_file = 'validate_bouquet_report.sql'
+                        sql_file = 'validate_bouq_report.sql'
                     else:
                         raise ValueError("Неверный тип отчета")
 
@@ -65,9 +70,6 @@ def reports_page():
                 except Exception as e:
                     message = f"Ошибка: {str(e)}"
 
-                #call_proc(current_app.config['db_config'], procedure_name, month, year)
-                #message = f"Отчет за {month}/{year} успешно создан."
-
             elif action == 'view' and user_group in ['admin', 'manager']:
                 # Формируем SQL-запрос на основе типа отчета
                 if report_type == 'couriers':
@@ -90,8 +92,11 @@ def reports_page():
 
     return render_template(
         'reports_page.html',
-        year=current_year,
+        current_year=current_year,
         message=message,
         records=records,
-        user_group=user_group
+        user_group=user_group,
+        year=year,
+        month=month
     )
+
