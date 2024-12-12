@@ -1,12 +1,10 @@
 import os
 from base64 import b64encode
-
 import requests
 from flask import Blueprint, request, render_template, session, redirect, url_for, current_app
 
 from database.sql_provider import SQLProvider
 from database.operations import select_dict
-
 
 blueprint_auth = Blueprint('bp_auth', __name__, template_folder='templates')
 provider = SQLProvider(os.path.join(os.path.dirname(__file__), 'sql'))
@@ -56,3 +54,12 @@ def start_auth():
                 return save_in_session_and_redirect(user[0])
 
         return render_template('input_login.html', message='Пользователь не найден')
+
+
+@blueprint_auth.route('/auth_fail')
+def auth_fail():
+    """
+    Страница ошибки доступа.
+    Пользователь перенаправляется сюда, если у него нет прав для доступа.
+    """
+    return render_template('auth_fail.html')

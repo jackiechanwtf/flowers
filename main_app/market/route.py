@@ -1,12 +1,14 @@
 from flask import Blueprint, session, request, redirect, render_template, flash, current_app
 from .model import get_bouquets, add_item_to_cart  # Импортируем функции из model.py
 from pathlib import Path
+from access import login_required
 
 # Создаем Blueprint
 blueprint_market = Blueprint('bp_market', __name__, template_folder='templates')
 
 # Главная страница с букетами
 @blueprint_market.route('/')
+@login_required(['guest'])
 def market():
     """Отображение списка букетов."""
     # Получаем путь к папке с изображениями
@@ -26,6 +28,7 @@ def market():
 
 # Обработчик добавления товара в корзину
 @blueprint_market.route('/add_to_cart', methods=['POST'])
+@login_required(['guest'])
 def add_to_cart():
     """Обработка добавления товара в корзину."""
     if 'cart' not in session:

@@ -6,8 +6,8 @@ from datetime import datetime
 blueprint_report = Blueprint('bp_report', __name__, template_folder='templates')
 
 
-@blueprint_report.route('/reports', methods=['GET', 'POST'])
-@login_required
+@blueprint_report.route('/', methods=['GET', 'POST'])
+@login_required(['admin', 'manager'])
 def reports_page():
     """
     Универсальная страница для работы с отчетами с учетом роли пользователя.
@@ -22,7 +22,7 @@ def reports_page():
     year = current_year
 
     # Получаем роль пользователя из сессии
-    user_group = session.get('user_group')  # По умолчанию роль "guest"
+    user_group = session.get('user_group')
 
     if request.method == 'POST':
         try:

@@ -29,20 +29,21 @@ app.config['db_config'] = json.load(open(project_path / 'configs/db.json'))
 app.config['roles_config'] = json.load(open(project_path / 'configs/roles.json'))
 
 @app.route('/')
-@login_required
+@login_required(['guest', 'admin', 'manager', 'dispatcher'])
 def menu_choice():
     # Получение роли пользователя из сессии
-    user_group = session.get('user_group')  # None, если роль отсутствует
+    user_group = session.get('user_group', 'guest')  # Присваиваем 'guest', если role отсутствует
 
     # Доступные сервисы для роли
     user_services = app.config['roles_config'].get(user_group, [])
 
-    template = 'internal_user_menu.html' if user_group else 'external_user_menu.html'
+    template = 'internal_user_menu.html' if user_group != 'guest' else 'external_user_menu.html'
 
     return render_template(template, user_services=user_services)
 
+
 @app.route('/exit')
-@login_required
+@login_required(['guest', 'admin', 'manager', 'dispatcher'])
 def exit_func():
     session.clear()
     return render_template('exit.html')

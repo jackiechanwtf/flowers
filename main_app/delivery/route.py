@@ -7,7 +7,7 @@ blueprint_delivery = Blueprint('bp_delivery', __name__, template_folder='templat
 
 # Главная страница с заказами
 @blueprint_delivery.route('/orders', methods=['GET'])
-@login_required
+@login_required(['dispatcher'])
 def orders_page():
     """
     Страница с заказами без доставки.
@@ -21,7 +21,7 @@ def orders_page():
 
 # Страница с курьерами для выбранного заказа
 @blueprint_delivery.route('/couriers/<int:order_id>', methods=['GET'])
-@login_required
+@login_required(['dispatcher'])
 def couriers_for_order(order_id):
     """
     Страница с курьерами для выбранного заказа.
@@ -35,7 +35,7 @@ def couriers_for_order(order_id):
 
 # Обработчик назначения курьера на заказ
 @blueprint_delivery.route('/assign_courier', methods=['POST'])
-@login_required
+@login_required(['dispatcher'])
 def assign_courier():
     """
     Назначить курьера на заказ и обновить статусы в таблицах delivery и couriers.

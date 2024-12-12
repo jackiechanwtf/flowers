@@ -3,6 +3,7 @@ from database.sql_provider import SQLProvider
 from database.operations import execute_update
 import os
 from database.connection import DBContextManager
+from access import login_required
 
 blueprint_cart = Blueprint('bp_cart', __name__, template_folder='templates')
 
@@ -10,6 +11,7 @@ blueprint_cart = Blueprint('bp_cart', __name__, template_folder='templates')
 sql_provider = SQLProvider(os.path.join(os.path.dirname(__file__), 'sql'))
 
 @blueprint_cart.route('/', methods=['GET', 'POST'])
+@login_required(['guest'])
 def cart():
     if 'cart' not in session:
         session['cart'] = []

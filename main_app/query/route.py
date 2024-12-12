@@ -6,8 +6,8 @@ from access import login_required
 blueprint_query = Blueprint('bp_query', __name__, template_folder='templates')
 
 
-@blueprint_query.route('/query', methods=['GET'])
-@login_required
+@blueprint_query.route('/', methods=['GET'])
+@login_required(['manager'])
 def query_page():
     """
     Страница с гиперссылками на разные запросы.
@@ -16,7 +16,7 @@ def query_page():
 
 
 @blueprint_query.route('/clients_by_period', methods=['GET', 'POST'])
-@login_required
+@login_required(['manager'])
 def clients_by_period():
     """
     Страница для запроса клиентов за указанный период.
@@ -33,7 +33,7 @@ def clients_by_period():
 
 
 @blueprint_query.route('/min_order_price', methods=['GET', 'POST'])
-@login_required
+@login_required(['manager'])
 def min_order_price():
     """
     Страница для запроса минимальной стоимости заказа.
@@ -46,7 +46,7 @@ def min_order_price():
 
 
 @blueprint_query.route('/couriers_no_orders', methods=['GET'])
-@login_required
+@login_required(['manager'])
 def couriers_no_orders():
     """
     Страница для запроса курьеров без заказов.
