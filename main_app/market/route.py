@@ -37,10 +37,10 @@ def add_to_cart():
     # Получаем данные из формы
     bouq_id = request.form['bouq_id']
     bouq_name = request.form['bouq_name']
-    bouq_price = float(request.form['bouq_price'])
+    bouq_price = int(request.form['bouq_price'])
     quantity = int(request.form['quantity'])
 
-    # Добавляем товар в корзину через модель
+    # Добавляем товар в корзину
     add_item_to_cart(bouq_id, bouq_name, bouq_price, quantity)
 
     # Уведомление пользователя

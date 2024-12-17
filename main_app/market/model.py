@@ -27,4 +27,4 @@ def add_item_to_cart(bouq_id, bouq_name, bouq_price, quantity):
             'quantity': quantity
         })
 
-    session.modified = True  # Помечаем сессию как измененную
+    session.modified = True

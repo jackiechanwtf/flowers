@@ -9,15 +9,12 @@ blueprint_report = Blueprint('bp_report', __name__, template_folder='templates')
 @blueprint_report.route('/', methods=['GET', 'POST'])
 @login_required(['admin', 'manager'])
 def reports_page():
-    """
-    Универсальная страница для работы с отчетами с учетом роли пользователя.
-    """
+    #страница для работы с отчетами с учетом роли пользователя.
     current_year = datetime.now().year
     current_month = datetime.now().month
     message = None
     records = None
 
-    # Значения по умолчанию
     month = current_month
     year = current_year
 
