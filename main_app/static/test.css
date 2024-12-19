@@ -141,16 +141,37 @@ h2, h3 {
 
 /* Flash-сообщения */
 .flash-messages {
-    margin: 10px auto;
-    width: 80%;
-    padding: 10px;
-    background-color: #ffcccc;
-    border: 1px solid #ff6666;
-    border-radius: 5px;
+    position: fixed;
+    top: 10px; /* Расположение сверху */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Смещение для точного центрирования по горизонтали */
+    z-index: 1000;
+    max-width: 300px;
+    text-align: center; /* Выравнивание текста по центру */
 }
 
 .flash-message {
-    margin-bottom: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
 }
 
 /* Список товаров */
@@ -158,6 +179,7 @@ h2, h3 {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    margin-bottom: 20px;
 }
 
 .cart-item {
@@ -223,6 +245,11 @@ button:hover {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
+    width: 100%;
+    max-width: 500px;  /* Ограничиваем ширину формы */
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Тень для формы */
 }
 
 .form-group {

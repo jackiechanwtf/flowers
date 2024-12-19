@@ -1,14 +1,3 @@
-/* Заголовки */
-h1 {
-    font-size: 16pt;
-    color: blue;
-    font-weight: bold;
-}
-
-h2 {
-    font-size: 14pt;
-    color: red;
-}
 
 label {
     font-size: 14pt;
@@ -44,27 +33,34 @@ input.submit {
 }
 
 /* Стили для контейнера с карточками */
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: space-between;
-    align-items: stretch; /* Выравниваем элементы по высоте */
+.market-container {
+    display: grid;                  /* Используем grid вместо flex */
+    grid-template-columns: repeat(5, 1fr);  /* 5 колонок с равной шириной */
+    gap: 16px;                      /* Отступы между элементами */
+    justify-items: center;          /* Центрируем элементы по горизонтали */
+    align-items: stretch;           /* Растягиваем карточки по высоте */
+    padding: 20px;
     padding-top: 20px;
     padding-bottom: 70px;
 }
+
 /* Стиль для карточки */
 .card {
     border: 1px solid #ccc;
     border-radius: 8px;
-    width: 220px; /* Устанавливаем фиксированную ширину карточки */
+    width: 220px;                   /* Фиксированная ширина карточки */
     padding: 16px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Выравнивание содержимого по высоте */
-    align-items: center ;
-    height: 350px; /* Устанавливаем одинаковую высоту для всех карточек */
+    align-items: center;
+    height: 350px;                  /* Одинаковая высота для всех карточек */
+}
+
+/* Дополнительно: уточните размер шрифта для карточек */
+.card h3 {
+    font-size: 14pt;
 }
 
 
@@ -197,4 +193,28 @@ input.submit {
     background-color: #f8d7da;
     border-color: #f5c6cb;
     color: #721c24;
+}
+
+header {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+footer {
+    position: relative;  /* Обычное позиционирование */
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+header h1 {
+    margin: 0;
 }
