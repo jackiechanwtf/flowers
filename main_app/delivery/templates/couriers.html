@@ -7,29 +7,34 @@
 {% block delivery %}
 <h2>Свободные курьеры для заказа {{ order_id }}</h2>
 
-<table class="couriers-table">
-    <thead>
-        <tr>
-            <th>Номер курьера</th>
-            <th>Имя курьера</th>
-            <th>Действие</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for courier in couriers %}
-        <tr>
-            <td>{{ courier.cour_id }}</td>
-            <td>{{ courier.cour_name }}</td>
-            <td>
-                <form action="{{ url_for('bp_delivery.assign_courier') }}" method="POST">
-                    <input type="hidden" name="order_id" value="{{ order_id }}">
-                    <input type="hidden" name="courier_id" value="{{ courier.cour_id }}">
-                    <button type="submit" class="btn-assign">Назначить</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% if couriers %}
+    <table class="couriers-table">
+        <thead>
+            <tr>
+                <th>Номер курьера</th>
+                <th>Имя курьера</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for courier in couriers %}
+            <tr>
+                <td>{{ courier.cour_id }}</td>
+                <td>{{ courier.cour_name }}</td>
+                <td>
+                    <form action="{{ url_for('bp_delivery.assign_courier') }}" method="POST">
+                        <input type="hidden" name="order_id" value="{{ order_id }}">
+                        <input type="hidden" name="courier_id" value="{{ courier.cour_id }}">
+                        <button type="submit" class="btn-assign">Назначить</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Все курьеры заняты.</p>
+{% endif %}
+
 <a href="/" class="back-button">Назад</a>
 {% endblock %}
