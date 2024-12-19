@@ -1,53 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Клиенты за период</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-</head>
-<body>
-    <h1>Клиенты за период</h1>
+{% extends 'base.html' %}
 
-    <form method="POST" action="{{ url_for('bp_query.clients_by_period') }}">
-        <label for="year">Год:</label>
-        <input type="number" name="year" id="year" min="2000" max="2100" required>
+{% block title %}
+Клиенты за период
+{% endblock %}
 
-        <label for="month_start">Начало периода (месяц):</label>
-        <input type="number" name="month_start" id="month_start" min="1" max="12" required>
+{% block query %}
+<form method="POST" action="{{ url_for('bp_query.clients_by_period') }}">
+    <label for="year">Год:</label>
+    <input type="number" name="year" id="year" min="2000" max="2100" required>
 
-        <label for="month_end">Конец периода (месяц):</label>
-        <input type="number" name="month_end" id="month_end" min="1" max="12" required>
+    <label for="month_start">Начало периода (месяц):</label>
+    <input type="number" name="month_start" id="month_start" min="1" max="12" required>
 
-        <button type="submit">Выполнить запрос</button>
-    </form>
+    <label for="month_end">Конец периода (месяц):</label>
+    <input type="number" name="month_end" id="month_end" min="1" max="12" required>
 
-    {% if result %}
-        <h2>Результаты:</h2>
-        <table>
-            <thead>
+    <button type="submit">Выполнить запрос</button>
+</form>
+
+{% if result %}
+    <h2>Результаты:</h2>
+    <table class="result-table">
+        <thead>
+            <tr>
+                {% for key in result[0].keys() %}
+                    <th>{{ key }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in result %}
                 <tr>
-                    {% for key in result[0].keys() %}
-                        <th>{{ key }}</th>
+                    {% for value in row.values() %}
+                        <td>{{ value }}</td>
                     {% endfor %}
                 </tr>
-            </thead>
-            <tbody>
-                {% for row in result %}
-                    <tr>
-                        {% for value in row.values() %}
-                            <td>{{ value }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        {% if request.method == 'POST' %}
-            <p>Результатов нет.</p>
-        {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    {% if request.method == 'POST' %}
+        <p>Результатов нет.</p>
     {% endif %}
-
-    <a href="{{ url_for('bp_query.query_page') }}">Назад</a>
-</body>
-</html>
+{% endif %}
+<a href="/" class="back-button">Назад</a>
+{% endblock %}

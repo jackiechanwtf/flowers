@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Отчеты</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Отчеты{% endblock %}
+
+{% block report %}
     <h1>Работа с отчетами</h1>
 
     <!-- Сообщение об ошибке или успехе -->
@@ -57,6 +55,5 @@
             </tbody>
         </table>
     {% endif %}
-<a href="/">Назад</a>
-</body>
-</html>
+<a href="/" class="back-button">Назад</a>
+{% endblock %}

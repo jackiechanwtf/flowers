@@ -41,6 +41,16 @@ def menu_choice():
 
     return render_template(template, user_services=user_services)
 
+@app.context_processor
+def inject_user():
+    # Получение данных пользователя из сессии
+    user = {
+        'is_authenticated': 'user_group' in session,
+        'username': session.get('user_name', 'Гость'),
+        'role': session.get('user_group', 'guest')
+    }
+    return {'user': user}
+
 
 @app.route('/exit')
 @login_required(['guest', 'admin', 'manager', 'dispatcher'])

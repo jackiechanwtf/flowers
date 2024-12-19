@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>До свидания</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}До свидания{% endblock %}
+
+{% block internal_user %}
     <h1>Вы вышли из системы</h1>
     <a href="/">В меню</a>
-</body>
-</html>
+{% endblock %}

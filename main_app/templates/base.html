@@ -2,14 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Base_menu</title>
-    <link href="/static/main.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flower Shop{% endblock %}</title>
+    <!-- Блок для подключения стилей, по умолчанию подключаем test.css -->
+    <link href="/static/test.css" rel="stylesheet" type="text/css">
+    {% block custom_styles %}
+    {% endblock %}
 </head>
 <body>
-    <div>
-        <h1 align="center"> Вам доступны следующие действия </h1>
+    <header>
+        <h1>🌸 Flower Shop</h1>
+        <p>Ваши любимые цветы в одном месте</p>
+    </header>
+
+    <main>
         {% block internal_user %}{% endblock %}
         {% block external_user %}{% endblock %}
-    </div>
+        {% block auth %}{% endblock %}
+        {% block query %}{% endblock %}
+        {% block report %}{% endblock %}
+        {% block delivery %}{% endblock %}
+        {% block market %}{% endblock %}
+        {% block cart %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Flower Shop. Все права защищены.</p>
+        <p>Контакты: <a href="mailto:support@flowershop.com">support@flowershop.com</a></p>
+    </footer>
 </body>
 </html>

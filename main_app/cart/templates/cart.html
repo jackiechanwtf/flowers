@@ -1,64 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина</title>
-    <link rel="stylesheet" href="/static/main.css">
-</head>
-<body>
-    <h1>Корзина</h1>
+{% extends 'base.html' %}
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="flash-messages">
-        {% for category, message in messages %}
-        <div class="flash-message {{ category }}">
-            {{ message }}
-        </div>
-        {% endfor %}
+{% block title %}
+Корзина
+{% endblock %}
+
+{% block cart %}
+<h2>Корзина</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-messages">
+    {% for category, message in messages %}
+    <div class="flash-message {{ category }}">
+        {{ message }}
     </div>
-    {% endif %}
-    {% endwith %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
 
-    {% if cart_items %}
-    <form action="/cart" method="post" style="margin-bottom: 10px;">
-        <button type="submit" name="clear_cart">Очистить корзину</button>
-    </form>
+{% if cart_items %}
+<form action="/cart" method="post" style="margin-bottom: 10px;">
+    <button type="submit" name="clear_cart" class="btn-clear">Очистить корзину</button>
+</form>
 
-    <ul>
-        {% for item in cart_items %}
-        <li>
-            <strong>{{ item['bouq_name'] }}</strong>
-            — {{ item['quantity'] }} шт.
-            ({{ item['bouq_price'] * item['quantity'] }} Р)
-            <form action="/cart" method="post" style="display: inline;">
-                <input type="hidden" name="bouq_id" value="{{ item['bouq_id'] }}">
-                <input type="hidden" name="bouq_name" value="{{ item['bouq_name'] }}">
-                <button type="submit" name="remove_from_cart">Удалить</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
+<ul class="cart-items">
+    {% for item in cart_items %}
+    <li class="cart-item">
+        <strong>{{ item['bouq_name'] }}</strong>
+        — {{ item['quantity'] }} шт.
+        ({{ item['bouq_price'] * item['quantity'] }} Р)
+        <form action="/cart" method="post" style="display: inline;">
+            <input type="hidden" name="bouq_id" value="{{ item['bouq_id'] }}">
+            <input type="hidden" name="bouq_name" value="{{ item['bouq_name'] }}">
+            <button type="submit" name="remove_from_cart" class="btn-remove">Удалить</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
 
-    <!-- Форма оформления заказа -->
-    <form method="post">
-        <h2>Оформление заказа</h2>
+<!-- Форма оформления заказа -->
+<form method="post" class="checkout-form">
+    <h3>Оформление заказа</h3>
+    <div class="form-group">
         <label for="delivery_date">Дата доставки:</label>
         <input type="date" id="delivery_date" name="delivery_date" required>
-
+    </div>
+    <div class="form-group">
         <label for="delivery_time">Время доставки:</label>
         <input type="time" id="delivery_time" name="delivery_time" required>
-
+    </div>
+    <div class="form-group">
         <label for="delivery_address">Адрес доставки:</label>
         <input type="text" id="delivery_address" name="delivery_address" required>
+    </div>
+    <button type="submit" name="checkout" class="btn-checkout">Оформить заказ</button>
+</form>
+{% else %}
+<p>Ваша корзина пуста.</p>
+{% endif %}
 
-        <button type="submit" name="checkout">Оформить заказ</button>
-    </form>
-    {% else %}
-    <p>Ваша корзина пуста.</p>
-    {% endif %}
-
-    <a href="/market" class="back-button">Вернуться в магазин</a>
-</body>
-</html>
+<a href="/market" class="back-button">Вернуться в магазин</a>
+{% endblock %}
