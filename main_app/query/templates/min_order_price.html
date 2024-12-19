@@ -14,7 +14,15 @@
 
 {% if result %}
     <h2>Результат:</h2>
-    <p>Минимальная цена: <strong>{{ result[0]['min_price'] }}</strong></p>
+    {% if result[0]['min_price'] is not none %}
+        <p>Минимальная цена: <strong>{{ result[0]['min_price'] }}</strong></p>
+    {% else %}
+        <p>Не было заказов в этом году.</p>
+    {% endif %}
+{% else %}
+    {% if request.method == 'POST' %}
+        <p>Не было заказов в этом году.</p>
+    {% endif %}
 {% endif %}
-<a href="/" class="back-button">Назад</a>
+<a href="/query" class="back-button">Назад</a>
 {% endblock %}

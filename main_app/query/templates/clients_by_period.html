@@ -19,19 +19,19 @@
 </form>
 
 {% if result %}
-    <h2>Результаты:</h2>
-    <table class="result-table">
+    <h2>Результаты за период с {{ month_start }} по {{ month_end }} в {{ year }} году</h2>
+    <table border="1">
         <thead>
             <tr>
-                {% for key in result[0].keys() %}
-                    <th>{{ key }}</th>
+                {% for column in result[0].keys() %}
+                    <th>{{ column }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
-            {% for row in result %}
+            {% for record in result %}
                 <tr>
-                    {% for value in row.values() %}
+                    {% for value in record.values() %}
                         <td>{{ value }}</td>
                     {% endfor %}
                 </tr>
@@ -43,5 +43,5 @@
         <p>Результатов нет.</p>
     {% endif %}
 {% endif %}
-<a href="/" class="back-button">Назад</a>
+<a href="/query" class="back-button">Назад</a>
 {% endblock %}
