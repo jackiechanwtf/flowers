@@ -12,6 +12,11 @@ def get_bouquets(db_config, cache_config):
     cache_select_dict = fetch_from_cache('items_cached', cache_config)(select_dict)
     sql_query = sql_provider.get('select_bouquets.sql', {})
     bouquets = cache_select_dict(db_config, sql_query)
+
+    # #Аналог редису с обычным вызовом
+    # sql_query = sql_provider.get('select_bouquets.sql', {})
+    # bouquets = select_dict(db_config, sql_query)
+
     return bouquets
 
 # Функция для добавления товара в корзину
