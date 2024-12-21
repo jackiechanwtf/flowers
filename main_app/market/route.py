@@ -15,7 +15,7 @@ def market():
     image_folder = Path(current_app.root_path) / 'static' / 'images'
 
     # Получаем данные о букетах из модели
-    bouquets = get_bouquets(current_app.config['db_config'])
+    bouquets = get_bouquets(current_app.config['db_config'], current_app.config['cache_config'])
 
     # Проверяем наличие изображений
     for bouquet in bouquets:

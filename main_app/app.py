@@ -25,6 +25,7 @@ app.register_blueprint(blueprint_delivery, url_prefix='/delivery')
 
 project_path = Path(__file__).resolve().parent
 app.config['db_config'] = json.load(open(project_path / 'configs/db.json'))
+app.config['cache_config'] = json.load(open(project_path / 'configs/cache.json'))
 
 app.config['roles_config'] = json.load(open(project_path / 'configs/roles.json'))
 
