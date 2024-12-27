@@ -60,7 +60,7 @@ a.btn {
 
 a.btn:hover {
     background-color: #388e3c;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -114,7 +114,7 @@ main {
 
 /* Футер */
 footer {
-    position: relative;  /* Обычное позиционирование */
+    position: relative;
     padding: 20px;
     text-align: center;
     background-color: #f9f9f9;
@@ -147,12 +147,12 @@ h2, h3 {
 /* Flash-сообщения */
 .flash-messages {
     position: fixed;
-    top: 10px; /* Расположение сверху */
-    left: 50%; /* Центрирование по горизонтали */
-    transform: translateX(-50%); /* Смещение для точного центрирования по горизонтали */
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
     max-width: 300px;
-    text-align: center; /* Выравнивание текста по центру */
+    text-align: center;
 }
 
 .flash-message {
@@ -251,10 +251,10 @@ button:hover {
     border-radius: 5px;
     background-color: #f9f9f9;
     width: 100%;
-    max-width: 500px;  /* Ограничиваем ширину формы */
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Тень для формы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -274,7 +274,6 @@ button:hover {
     border-radius: 5px;
 }
 /* Таблицы */
-/* Стили для таблицы */
 table {
     width: 100%;
     border-collapse: collapse;
