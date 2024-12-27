@@ -26,14 +26,13 @@ app.register_blueprint(blueprint_delivery, url_prefix='/delivery')
 project_path = Path(__file__).resolve().parent
 app.config['db_config'] = json.load(open(project_path / 'configs/db.json'))
 app.config['cache_config'] = json.load(open(project_path / 'configs/cache.json'))
-
 app.config['roles_config'] = json.load(open(project_path / 'configs/roles.json'))
 
 @app.route('/')
 @login_required(['guest', 'admin', 'manager', 'dispatcher'])
 def menu_choice():
     # Получение роли пользователя из сессии
-    user_group = session.get('user_group', 'guest')  # Присваиваем 'guest', если role отсутствует
+    user_group = session.get('user_group')
 
     # Доступные сервисы для роли
     user_services = app.config['roles_config'].get(user_group, [])
@@ -41,17 +40,6 @@ def menu_choice():
     template = 'internal_user_menu.html' if user_group != 'guest' else 'external_user_menu.html'
 
     return render_template(template, user_services=user_services)
-
-@app.context_processor
-def inject_user():
-    # Получение данных пользователя из сессии
-    user = {
-        'is_authenticated': 'user_group' in session,
-        'username': session.get('user_name', 'Гость'),
-        'role': session.get('user_group', 'guest')
-    }
-    return {'user': user}
-
 
 @app.route('/exit')
 @login_required(['guest', 'admin', 'manager', 'dispatcher'])

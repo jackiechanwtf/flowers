@@ -6,7 +6,7 @@ def login_required(allowed_roles: List[str] = []) -> Callable:
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
-            # Если у пользователя нет роли (user_group == None), автоматически присваиваем 'guest'
+            # Если у пользователя нет роли, автоматически присваиваем 'guest'
             if session.get('user_group') is None:
                 session['user_group'] = 'guest'
 

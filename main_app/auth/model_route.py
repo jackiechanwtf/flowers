@@ -14,7 +14,8 @@ def create_basic_auth_token(login, password):
     """
     Создает авторизационный токен в формате Basic для внешнего API
     """
-    credentials_b64 = b64encode(f'{login}:{password}'.encode('ascii')).decode('ascii')
+    # Используем кодировку 'utf-8' вместо 'ascii'
+    credentials_b64 = b64encode(f'{login}:{password}'.encode('utf-8')).decode('utf-8')
     token = f'Basic {credentials_b64}'
     return token
 

@@ -28,8 +28,16 @@ def clients_by_period():
             'month_end': request.form.get('month_end')
         }
         result = get_clients_by_period(params, current_app.config['db_config'])
-        return render_template('clients_by_period.html', result=result)
+        # Передаем дополнительные данные в шаблон
+        return render_template(
+            'clients_by_period.html',
+            result=result,
+            year=params['year'],
+            month_start=params['month_start'],
+            month_end=params['month_end']
+        )
     return render_template('clients_by_period.html')
+
 
 
 @blueprint_query.route('/min_order_price', methods=['GET', 'POST'])
