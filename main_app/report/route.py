@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, current_app, session
-from .model import validate_report_existence, add_report, get_report
+from .model_report import validate_report_existence, add_report, get_report
 from access import login_required
 from datetime import datetime
 

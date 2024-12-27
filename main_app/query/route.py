@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, current_app
-from .model import get_clients_by_period, get_min_order_price, get_couriers_no_orders
+from .model_route import get_clients_by_period, get_min_order_price, get_couriers_no_orders
 from access import login_required
 
 # Создаем блюпринт

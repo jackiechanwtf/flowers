@@ -1,6 +1,5 @@
-# route.py
 from flask import Blueprint, request, render_template, session, redirect, url_for
-from .model import authenticate_user, save_in_session_and_redirect
+from .model_route import authenticate_user, save_in_session_and_redirect
 
 blueprint_auth = Blueprint('bp_auth', __name__, template_folder='templates')
 

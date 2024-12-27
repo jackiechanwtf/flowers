@@ -1,5 +1,5 @@
 from flask import Blueprint, session, request, redirect, render_template, flash, current_app
-from .model import get_bouquets, add_item_to_cart  # Импортируем функции из model.py
+from .model import get_bouquets, add_item_to_cart  # Импортируем функции из model_report.py
 from pathlib import Path
 from access import login_required
 
