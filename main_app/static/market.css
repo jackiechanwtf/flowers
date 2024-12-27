@@ -1,0 +1,263 @@
+label {
+    font-size: 14px;
+    color: #333;                  /* Нейтральный цвет текста */
+    margin-right: 8px;            /* Отступ справа */
+    display: flex;
+    align-items: center;
+}
+
+
+/* Стиль для кнопки submit */
+input.submit {
+    color: blue;
+    font-weight: bold;
+}
+
+.card img {
+    width: 200px;      /* Устанавливаем фиксированную ширину */
+    height: 200px;     /* Устанавливаем фиксированную высоту */
+    object-fit: cover; /* Изображение обрезается с сохранением пропорций */
+    border-radius: 8px; /* Добавим закругленные углы для улучшения внешнего вида */
+}
+
+/* Стили для контейнера с карточками */
+.market-container {
+    display: grid;                  /* Используем grid вместо flex */
+    grid-template-columns: repeat(5, 1fr);  /* 5 колонок с равной шириной */
+    gap: 16px;                      /* Отступы между элементами */
+    justify-items: center;          /* Центрируем элементы по горизонтали */
+    align-items: stretch;           /* Растягиваем карточки по высоте */
+    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 70px;
+}
+
+/* Стиль для карточки */
+.card {
+    border: 1px solid #ddd;          /* Светлая рамка */
+    border-radius: 12px;            /* Закругленные углы */
+    width: 240px;                   /* Чуть больше ширины */
+    padding: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 380px;                  /* Немного увеличим высоту */
+    background-color: #fff;         /* Белый фон */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+    transition: transform 0.3s, box-shadow 0.3s; /* Плавные переходы */
+}
+
+.card:hover {
+    transform: scale(1.05);         /* Лёгкое увеличение */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Более сильная тень */
+    border-color: #4caf50;          /* Зеленая рамка при наведении */
+}
+
+/* Текст заголовка карточки */
+.card h3 {
+    font-size: 16pt;                /* Немного больше шрифт */
+    font-weight: bold;              /* Полужирный стиль */
+    color: #333;                    /* Тёмный цвет текста */
+    margin-bottom: 10px;
+}
+
+/* Цена букета */
+.card p {
+    font-size: 14pt;                /* Шрифт больше для акцента */
+    color: #555;                    /* Спокойный серый цвет */
+    margin-bottom: 12px;
+}
+
+/* Стили для кнопки "Добавить в корзину" */
+.add-to-cart {
+    background-color: #4caf50;    /* Зеленый фон */
+    color: white;                 /* Белый текст */
+    border: none;                 /* Без рамки */
+    border-radius: 6px;           /* Скругленные углы */
+    padding: 8px 16px;            /* Отступы */
+    cursor: pointer;              /* Указатель мыши */
+    font-size: 14px;              /* Размер текста */
+    transition: background-color 0.3s, transform 0.2s; /* Плавные эффекты */
+}
+
+.add-to-cart:hover {
+    background-color: #45a049;    /* Более насыщенный зеленый при наведении */
+    transform: scale(1.05);       /* Увеличение */
+}
+
+/* Рамка для изображения, если фото отсутствует */
+.image-frame {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #888;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+/* Рамка для изображения, если фото отсутствует */
+.image-frame {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #888;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+/* Контейнер для управления корзиной */
+.cart-controls {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;                  /* Растягиваем элементы на всю ширину карточки */
+    padding: 10px;                /* Отступы вокруг */
+    background-color: #f7f7f7;    /* Светлый фон для блока */
+    border-top: 1px solid #ddd;   /* Разделительная линия сверху */
+    border-radius: 0 0 12px 12px; /* Скругляем нижние углы */
+}
+
+/* Стили для ввода количества */
+.quantity-input {
+    width: 60px;                  /* Уменьшаем ширину */
+    height: 32px;                 /* Высота поля ввода */
+    padding: 4px;                 /* Внутренние отступы */
+    font-size: 14px;              /* Размер текста */
+    border: 1px solid #ccc;       /* Светлая рамка */
+    border-radius: 6px;           /* Скругленные углы */
+    text-align: center;           /* Текст по центру */
+    margin-right: 12px;           /* Отступ справа от кнопки */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Лёгкая внутренняя тень */
+}
+
+/* Стили для кнопки корзины */
+.cart-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    color: #4CAF50;
+    border: 2px solid #4CAF50; /* Зеленая рамка */
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.cart-button img {
+    width: 24px; /* Размер изображения */
+    height: 24px; /* Размер изображения */
+    margin-right: 8px; /* Отступ между изображением и текстом */
+}
+
+.cart-button i {
+    font-size: 24px;
+}
+
+.cart-button:hover {
+    background-color: #f0f0f0;
+}
+
+.back-button {
+    display: inline-block;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background-color: #45a049;
+}
+
+.flash-messages {
+    position: fixed;
+    top: 10px; /* Расположение сверху */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Смещение для точного центрирования по горизонтали */
+    z-index: 1000;
+    max-width: 300px;
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+.flash-message {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+header {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+footer {
+    position: relative;  /* Обычное позиционирование */
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+}
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}

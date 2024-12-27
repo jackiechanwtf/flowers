@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block query %}
-<ul>
-    <li><a href="{{ url_for('bp_query.clients_by_period') }}">Клиенты за период</a></li>
-    <li><a href="{{ url_for('bp_query.min_order_price') }}">Минимальная цена заказа</a></li>
-    <li><a href="{{ url_for('bp_query.couriers_no_orders') }}">Курьеры без заказов</a></li>
-</ul>
+<p align="center">
+    <a href="{{ url_for('bp_query.clients_by_period') }}" class="btn">Клиенты за период</a><br><br>
+    <a href="{{ url_for('bp_query.min_order_price') }}" class="btn">Минимальная цена заказа</a><br><br>
+    <a href="{{ url_for('bp_query.couriers_no_orders') }}" class="btn">Курьеры без заказов</a><br><br>
+</p>
 <a href="/" class="back-button">Назад</a>
 {% endblock %}

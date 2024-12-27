@@ -2,15 +2,15 @@
 
 {% block internal_user %}
 <p align="center">
-    {% if 'reports' in user_services %}
-        <a href="{{ url_for('bp_report.reports_page') }}">Работа с отчетами</a><br><br>
-    {% endif %}
     {% if 'queries' in user_services %}
-        <a href="{{ url_for('bp_query.query_page') }}">Работа с запросами</a><br><br>
+        <a href="{{ url_for('bp_query.query_page') }}" class="btn">Работа с запросами</a><br><br>
+    {% endif %}
+    {% if 'reports' in user_services %}
+        <a href="{{ url_for('bp_report.reports_page') }}" class="btn">Работа с отчетами</a><br><br>
     {% endif %}
     {% if 'delivery' in user_services %}
-        <a href="{{ url_for('bp_delivery.orders_page') }}">Работа с доставкой</a><br><br>
+        <a href="{{ url_for('bp_delivery.orders_page') }}" class="btn">Работа с доставкой</a><br><br>
     {% endif %}
-    <a href="/exit"> Нажмите для выхода из системы</a>
+    <a href="/exit" class="btn"> Нажмите для выхода из системы</a>
 </p>
 {% endblock %}
