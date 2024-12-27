@@ -41,6 +41,5 @@ def add_to_cart():
         # Возвращаем пользователя на страницу маркета
         return redirect('/market')
     except Exception as e:
-        # Обработка ошибок
         flash(f"Ошибка: {str(e)}", 'danger')
         return redirect('/market')

@@ -4,7 +4,6 @@ from database.operations import execute_update
 from database.connection import DBContextManager
 import os
 
-# Загружаем SQL-провайдер
 sql_provider = SQLProvider(os.path.join(os.path.dirname(__file__), 'sql'))
 
 

@@ -13,7 +13,7 @@ def get_bouquets(db_config, cache_config):
     sql_query = sql_provider.get('select_bouquets.sql', {})
     bouquets = cache_select_dict(db_config, sql_query)
 
-    # #Аналог редису с обычным вызовом
+    # Аналог редису с обычным вызовом
     # sql_query = sql_provider.get('select_bouquets.sql', {})
     # bouquets = select_dict(db_config, sql_query)
 
@@ -48,5 +48,4 @@ def add_item_to_cart(request):
             'quantity': quantity
         })
 
-    # Обновляем сессию
     session.modified = True

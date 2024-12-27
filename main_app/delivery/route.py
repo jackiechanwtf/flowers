@@ -13,6 +13,7 @@ def orders_page():
     Страница с заказами без доставки.
     """
     try:
+        # Получаем все заказы без курьеров
         orders = get_orders(current_app.config['db_config'])  # Получаем все заказы
         return render_template('orders.html', orders=orders)
     except Exception as e:
@@ -27,6 +28,7 @@ def couriers_for_order(order_id):
     Страница с курьерами для выбранного заказа.
     """
     try:
+        # Получаем всех свободных курьеров
         couriers = get_free_couriers(current_app.config['db_config'])  # Получаем список свободных курьеров
         return render_template('couriers.html', couriers=couriers, order_id=order_id)
     except Exception as e:
@@ -45,9 +47,7 @@ def assign_courier():
         assign_courier_to_order(request, current_app.config['db_config'])
 
         # Получаем данные о заказе и курьере для отображения
-        order_id = request.form.get('order_id')
-        courier_id = request.form.get('courier_id')
-        order_info = get_order_info(order_id, courier_id, current_app.config['db_config'])
+        order_info = get_order_info(request, current_app.config['db_config'])
         if not order_info:
             return "Ошибка: не удалось получить информацию о заказе и курьере.", 400
 

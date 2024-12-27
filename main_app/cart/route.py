@@ -7,14 +7,17 @@ blueprint_cart = Blueprint('bp_cart', __name__, template_folder='templates')
 @blueprint_cart.route('/', methods=['GET', 'POST'])
 def cart():
     if request.method == 'POST':
+        # Полная очистка корзины
         if 'clear_cart' in request.form:
             clear_cart(request)
             return redirect('/cart')
 
+        # Удаляем конкретный товар
         elif 'remove_from_cart' in request.form:
             remove_from_cart(request)
             return redirect('/cart')
 
+        # Оформление заказа
         elif 'checkout' in request.form:
             user_id = session.get('user_id')  # ID клиента из сессии
             checkout(request, user_id)
