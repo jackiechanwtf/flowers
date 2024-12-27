@@ -8,15 +8,17 @@ from datetime import datetime
 provider = SQLProvider(os.path.join(os.path.dirname(__file__), 'sql'))
 
 
-def validate_report_existence(month, year, report_type, db_config):
+def validate_report_existence(request, db_config):
     """
-    Проверка, существует ли отчет за указанный месяц и год.
-    :param month: месяц.
-    :param year: год.
-    :param report_type: тип отчета.
+    Проверка, существует ли отчет за указанный месяц и год, используя данные из формы.
+    :param request: объект запроса.
     :param db_config: конфигурация базы данных.
     :return: результат запроса о существовании отчета.
     """
+    month = int(request.form.get('month_choice'))
+    year = int(request.form.get('year_choice'))
+    report_type = request.form.get('report_type')
+
     if report_type == 'couriers':
         sql_file = 'validate_courier_report.sql'
     elif report_type == 'bouquets':
@@ -28,16 +30,18 @@ def validate_report_existence(month, year, report_type, db_config):
     return select_dict(db_config, sql_query)
 
 
-def add_report(month, year, report_type, db_config):
+def add_report(request, db_config):
     """
-    Добавление отчета в базу данных, если он еще не существует.
-    :param month: месяц.
-    :param year: год.
-    :param report_type: тип отчета.
+    Добавление отчета в базу данных, если он еще не существует, с данными из формы.
+    :param request: объект запроса.
     :param db_config: конфигурация базы данных.
     :return: сообщение о результате выполнения.
     """
     try:
+        month = int(request.form.get('month_choice'))
+        year = int(request.form.get('year_choice'))
+        report_type = request.form.get('report_type')
+
         procedure_name = 'courier_report' if report_type == 'couriers' else 'date_report'
 
         # Вызов хранимой процедуры для добавления отчета
@@ -45,7 +49,7 @@ def add_report(month, year, report_type, db_config):
             cursor.callproc(procedure_name, [month, year])
 
         # Повторно проверяем, добавлен ли отчет
-        result_after = validate_report_existence(month, year, report_type, db_config)
+        result_after = validate_report_existence(request, db_config)
         if result_after and result_after[0]['record_count'] > 0:
             return f"Отчет за {month}/{year} успешно создан."
         else:
@@ -54,15 +58,17 @@ def add_report(month, year, report_type, db_config):
         return f"Ошибка: {str(e)}"
 
 
-def get_report(month, year, report_type, db_config):
+def get_report(request, db_config):
     """
-    Получение отчета за указанный месяц и год.
-    :param month: месяц.
-    :param year: год.
-    :param report_type: тип отчета.
+    Получение отчета за указанный месяц и год, используя данные из формы.
+    :param request: объект запроса.
     :param db_config: конфигурация базы данных.
     :return: список записей отчета.
     """
+    month = int(request.form.get('month_choice'))
+    year = int(request.form.get('year_choice'))
+    report_type = request.form.get('report_type')
+
     if report_type == 'couriers':
         sql = provider.get('couriers_report.sql', kwargs={'month': month, 'year': year})
     elif report_type == 'bouquets':

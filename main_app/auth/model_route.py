@@ -1,4 +1,4 @@
-# model_report.py
+# model_route.py
 import os
 import requests
 from base64 import b64encode
@@ -14,7 +14,6 @@ def create_basic_auth_token(login, password):
     """
     Создает авторизационный токен в формате Basic для внешнего API
     """
-    # Используем кодировку 'utf-8' вместо 'ascii'
     credentials_b64 = b64encode(f'{login}:{password}'.encode('utf-8')).decode('utf-8')
     token = f'Basic {credentials_b64}'
     return token
@@ -30,10 +29,14 @@ def save_in_session_and_redirect(user_dict, session):
     return True  # Перенаправление будет обработано в контроллере
 
 
-def authenticate_user(login, password, is_internal):
+def authenticate_user(request, is_internal):
     """
-    Аутентификация пользователя: внешний API или внутренняя база данных
+    Аутентификация пользователя: внешний API или внутренняя база данных.
+    Теперь мы получаем request и извлекаем данные в модели.
     """
+    login = request.form.get('login', '')
+    password = request.form.get('password', '')
+
     if not login or not password:
         return None, 'Повторите ввод'
 

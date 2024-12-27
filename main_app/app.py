@@ -1,8 +1,6 @@
 import json
 from pathlib import Path
-
 from flask import Flask, render_template, session
-
 from auth.route import blueprint_auth
 from report.route import blueprint_report
 from query.route import blueprint_query
@@ -10,7 +8,6 @@ from market.route import blueprint_market
 from cart.route import blueprint_cart
 from delivery.route import blueprint_delivery
 from access import login_required
-
 
 app = Flask(__name__)
 app.secret_key = 'SuperKey'
@@ -21,7 +18,6 @@ app.register_blueprint(blueprint_report, url_prefix='/report')
 app.register_blueprint(blueprint_market, url_prefix='/market')
 app.register_blueprint(blueprint_cart, url_prefix='/cart')
 app.register_blueprint(blueprint_delivery, url_prefix='/delivery')
-
 
 project_path = Path(__file__).resolve().parent
 app.config['db_config'] = json.load(open(project_path / 'configs/db.json'))

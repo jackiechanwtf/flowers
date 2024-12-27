@@ -12,11 +12,9 @@ def start_auth():
     if request.method == 'GET':
         return render_template('input_login.html', message='')
     else:
-        login = request.form.get('login', '')
-        password = request.form.get('password', '')
         is_internal = True if request.form.get('is_internal') == 'on' else False
 
-        user, message = authenticate_user(login, password, is_internal)
+        user, message = authenticate_user(request, is_internal)
 
         if user:
             save_in_session_and_redirect(user, session)

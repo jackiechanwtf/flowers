@@ -22,22 +22,16 @@ def clients_by_period():
     Страница для запроса клиентов за указанный период.
     """
     if request.method == 'POST':
-        params = {
-            'year': request.form.get('year'),
-            'month_start': request.form.get('month_start'),
-            'month_end': request.form.get('month_end')
-        }
-        result = get_clients_by_period(params, current_app.config['db_config'])
+        result = get_clients_by_period(request, current_app.config['db_config'])
         # Передаем дополнительные данные в шаблон
         return render_template(
             'clients_by_period.html',
             result=result,
-            year=params['year'],
-            month_start=params['month_start'],
-            month_end=params['month_end']
+            year=request.form.get('year'),
+            month_start=request.form.get('month_start'),
+            month_end=request.form.get('month_end')
         )
     return render_template('clients_by_period.html')
-
 
 
 @blueprint_query.route('/min_order_price', methods=['GET', 'POST'])
@@ -47,8 +41,7 @@ def min_order_price():
     Страница для запроса минимальной стоимости заказа.
     """
     if request.method == 'POST':
-        params = {'year': request.form.get('year')}
-        result = get_min_order_price(params, current_app.config['db_config'])
+        result = get_min_order_price(request, current_app.config['db_config'])
         return render_template('min_order_price.html', result=result)
     return render_template('min_order_price.html')
 

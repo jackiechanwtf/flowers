@@ -9,7 +9,7 @@ blueprint_report = Blueprint('bp_report', __name__, template_folder='templates')
 @blueprint_report.route('/', methods=['GET', 'POST'])
 @login_required(['admin', 'manager'])
 def reports_page():
-    #страница для работы с отчетами с учетом роли пользователя.
+    # страница для работы с отчетами с учетом роли пользователя.
     current_year = datetime.now().year
     current_month = datetime.now().month
     message = None
@@ -23,25 +23,21 @@ def reports_page():
 
     if request.method == 'POST':
         try:
-            # Получаем данные из формы
+            # Получаем данные из формы и передаем их в модель
             action = request.form.get('action')  # Действие: "add" или "view"
-            month = int(request.form.get('month_choice'))
-            year = int(request.form.get('year_choice'))
-            report_type = request.form.get('report_type')  # Тип отчета: "couriers" или "bouquets"
-
             if action == 'add' and user_group == 'manager':
                 # Проверяем, существует ли отчет
-                result = validate_report_existence(month, year, report_type, current_app.config['db_config'])
+                result = validate_report_existence(request, current_app.config['db_config'])
 
                 if result and result[0]['record_count'] > 0:
                     message = f"Отчет за {month}/{year} уже существует. Создание отменено."
                 else:
                     # Если отчета нет, добавляем новый
-                    message = add_report(month, year, report_type, current_app.config['db_config'])
+                    message = add_report(request, current_app.config['db_config'])
 
             elif action == 'view' and user_group in ['admin', 'manager']:
                 # Получаем отчет
-                records = get_report(month, year, report_type, current_app.config['db_config'])
+                records = get_report(request, current_app.config['db_config'])
                 if not records:
                     message = f"Отчет за {month}/{year} не найден."
                 else:

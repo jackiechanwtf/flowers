@@ -7,7 +7,7 @@
 {% block query %}
 <form method="POST" action="{{ url_for('bp_query.clients_by_period') }}">
     <label for="year">Год:</label>
-    <input type="number" name="year" id="year" min="2000" max="2100" required>
+    <input type="number" name="year" id="year" min="2000" max="2025" required>
 
     <label for="month_start">Начало периода (месяц):</label>
     <input type="number" name="month_start" id="month_start" min="1" max="12" required>

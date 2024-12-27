@@ -39,13 +39,25 @@ def get_delivery_id(order_id, db_config):
     return result[0]['delivery_id'] if result else None
 
 
-def assign_courier_to_order(courier_id, delivery_id, db_config):
+def assign_courier_to_order(request, db_config):
     """
     Назначить курьера на заказ и обновить статусы в таблицах delivery и couriers.
-    :param courier_id: ID курьера.
-    :param delivery_id: ID доставки.
+    Извлекаем данные из request.form внутри модели.
+    :param request: объект запроса, содержащий данные формы.
     :param db_config: конфигурация базы данных.
     """
+    # Извлекаем данные из request.form
+    order_id = request.form.get('order_id')
+    courier_id = request.form.get('courier_id')
+
+    if not order_id or not courier_id:
+        raise ValueError("Ошибка: order_id или courier_id не переданы")
+
+    # Получаем delivery_id для выбранного заказа
+    delivery_id = get_delivery_id(order_id, db_config)
+    if not delivery_id:
+        raise ValueError(f"Ошибка: не найден delivery_id для заказа {order_id}")
+
     # Обновляем таблицу delivery (назначаем курьера на заказ)
     sql_update_delivery = provider.get('update_delivery.sql', kwargs={'courier_id': courier_id, 'delivery_id': delivery_id})
     execute_update(db_config, sql_update_delivery)

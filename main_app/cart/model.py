@@ -15,29 +15,33 @@ def get_cart():
     return session['cart']
 
 
-def clear_cart():
+def clear_cart(request):
     """Очистка корзины."""
     session['cart'] = []
     session.modified = True
     flash('Корзина была успешно очищена.', 'success')
 
 
-def remove_from_cart(bouq_name):
+def remove_from_cart(request):
     """Удаление товара из корзины."""
+    bouq_name = request.form.get('bouq_name')
     session['cart'] = [item for item in session['cart'] if item['bouq_name'] != bouq_name]
     session.modified = True
     flash(f'Букет "{bouq_name}" удален из корзины!', 'success')
 
 
-def checkout(del_date, delivery_time, delivery_place, user_id):
+def checkout(request, user_id):
     """
     Оформление заказа.
-    :param del_date: дата доставки.
-    :param delivery_time: время доставки.
-    :param delivery_place: адрес доставки.
+    :param request: объект запроса, содержащий данные формы.
     :param user_id: ID клиента из сессии.
     """
     try:
+        # Извлечение данных из формы
+        del_date = request.form.get('delivery_date')
+        delivery_time = request.form.get('delivery_time')
+        delivery_place = request.form.get('delivery_address')
+
         # Добавление информации о доставке
         sql_insert_delivery = sql_provider.get('insert_delivery.sql', {
             'del_date': del_date,

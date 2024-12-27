@@ -7,7 +7,7 @@
 {% block query %}
 <form method="POST" action="{{ url_for('bp_query.min_order_price') }}">
     <label for="year">Год:</label>
-    <input type="number" name="year" id="year" min="2000" max="2100" required>
+    <input type="number" name="year" id="year" min="2000" max="2025" required>
 
     <button type="submit">Выполнить запрос</button>
 </form>

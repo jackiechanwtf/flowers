@@ -8,20 +8,16 @@ blueprint_cart = Blueprint('bp_cart', __name__, template_folder='templates')
 def cart():
     if request.method == 'POST':
         if 'clear_cart' in request.form:
-            clear_cart()
+            clear_cart(request)
             return redirect('/cart')
 
         elif 'remove_from_cart' in request.form:
-            bouq_name = request.form['bouq_name']
-            remove_from_cart(bouq_name)
+            remove_from_cart(request)
             return redirect('/cart')
 
         elif 'checkout' in request.form:
-            del_date = request.form['delivery_date']
-            delivery_time = request.form['delivery_time']
-            delivery_place = request.form['delivery_address']
             user_id = session.get('user_id')  # ID клиента из сессии
-            checkout(del_date, delivery_time, delivery_place, user_id)
+            checkout(request, user_id)
             return redirect('/cart')
 
     cart_items = get_cart()

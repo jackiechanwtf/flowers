@@ -40,22 +40,13 @@ def assign_courier():
     """
     Назначить курьера на заказ и обновить статусы в таблицах delivery и couriers.
     """
-    order_id = request.form.get('order_id')
-    courier_id = request.form.get('courier_id')
-
-    if not order_id or not courier_id:
-        return "Ошибка: order_id или courier_id не переданы", 400
-
     try:
-        # Получаем delivery_id для выбранного заказа
-        delivery_id = get_delivery_id(order_id, current_app.config['db_config'])
-        if not delivery_id:
-            return f"Ошибка: не найден delivery_id для заказа {order_id}", 400
+        # Передаем request в модель для обработки данных
+        assign_courier_to_order(request, current_app.config['db_config'])
 
-        # Назначаем курьера на заказ
-        assign_courier_to_order(courier_id, delivery_id, current_app.config['db_config'])
-
-        # Получаем информацию о заказе и курьере для отображения на странице
+        # Получаем данные о заказе и курьере для отображения
+        order_id = request.form.get('order_id')
+        courier_id = request.form.get('courier_id')
         order_info = get_order_info(order_id, courier_id, current_app.config['db_config'])
         if not order_info:
             return "Ошибка: не удалось получить информацию о заказе и курьере.", 400

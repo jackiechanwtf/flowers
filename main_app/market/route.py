@@ -1,5 +1,5 @@
 from flask import Blueprint, session, request, redirect, render_template, flash, current_app
-from .model import get_bouquets, add_item_to_cart  # Импортируем функции из model_report.py
+from .model import get_bouquets, add_item_to_cart
 from pathlib import Path
 from access import login_required
 
@@ -31,20 +31,16 @@ def market():
 @login_required(['guest'])
 def add_to_cart():
     """Обработка добавления товара в корзину."""
-    if 'cart' not in session:
-        session['cart'] = []
+    try:
+        # Передаем request в модель для обработки данных
+        add_item_to_cart(request)
 
-    # Получаем данные из формы
-    bouq_id = request.form['bouq_id']
-    bouq_name = request.form['bouq_name']
-    bouq_price = int(request.form['bouq_price'])
-    quantity = int(request.form['quantity'])
+        # Уведомление пользователя
+        flash('Товар добавлен в корзину!', 'success')
 
-    # Добавляем товар в корзину
-    add_item_to_cart(bouq_id, bouq_name, bouq_price, quantity)
-
-    # Уведомление пользователя
-    flash('Товар добавлен в корзину!', 'success')
-
-    # Возвращаем пользователя на страницу маркета
-    return redirect('/market')
+        # Возвращаем пользователя на страницу маркета
+        return redirect('/market')
+    except Exception as e:
+        # Обработка ошибок
+        flash(f"Ошибка: {str(e)}", 'danger')
+        return redirect('/market')

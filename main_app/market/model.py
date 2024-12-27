@@ -1,8 +1,8 @@
-from database.operations import select_dict
-from database.sql_provider import SQLProvider
 from flask import session
-import os
+from database.sql_provider import SQLProvider
+from database.operations import select_dict
 from cache.wrapper import fetch_from_cache
+import os
 
 # Функция для получения всех букетов
 def get_bouquets(db_config, cache_config):
@@ -19,21 +19,34 @@ def get_bouquets(db_config, cache_config):
 
     return bouquets
 
-# Функция для добавления товара в корзину
-def add_item_to_cart(bouq_id, bouq_name, bouq_price, quantity):
+# Функция для добавления товара в корзину из данных запроса
+def add_item_to_cart(request):
+    """
+    Извлекает данные из request.form и добавляет товар в корзину.
+    :param request: объект запроса
+    """
+    # Получаем данные из формы
+    bouq_id = request.form['bouq_id']
+    bouq_name = request.form['bouq_name']
+    bouq_price = int(request.form['bouq_price'])
+    quantity = int(request.form['quantity'])
+
     if 'cart' not in session:
         session['cart'] = []
 
+    # Проверяем, есть ли товар в корзине и обновляем количество
     for item in session['cart']:
         if item['bouq_name'] == bouq_name:
             item['quantity'] += quantity
             break
     else:
+        # Добавляем новый товар в корзину
         session['cart'].append({
-            'bouq_id' : bouq_id,
+            'bouq_id': bouq_id,
             'bouq_name': bouq_name,
             'bouq_price': bouq_price,
             'quantity': quantity
         })
 
+    # Обновляем сессию
     session.modified = True
