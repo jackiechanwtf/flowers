@@ -40,7 +40,7 @@
                 <div class="image-frame">Фото в обработке</div>
                 {% endif %}
                 <h3>{{ bouquet['bouq_name'] }}</h3>
-                <p>Цена: {{ bouquet['bouq_price'] }} Р</p>
+                <p>Цена: {{ bouquet['bouq_price'] }} ₽</p>
                 <form action="/market/add_to_cart" method="post" class="cart-controls">
                     <input type="hidden" name="bouq_id" value="{{ bouquet['bouq_id'] }}">
                     <input type="hidden" name="bouq_name" value="{{ bouquet['bouq_name'] }}">
