@@ -4,6 +4,7 @@ from database.operations import select_dict
 from cache.wrapper import fetch_from_cache
 import os
 
+
 # Функция для получения всех букетов
 def get_bouquets(db_config, cache_config):
     sql_provider = SQLProvider(os.path.join(os.path.dirname(__file__), 'sql'))
