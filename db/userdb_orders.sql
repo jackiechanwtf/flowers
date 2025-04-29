@@ -1,0 +1,57 @@
+-- MySQL dump 10.13  Distrib 8.0.36, for macos14 (arm64)
+--
+-- Host: 127.0.0.1    Database: userdb
+-- ------------------------------------------------------
+-- Server version	8.0.36
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `cl_id` int DEFAULT NULL,
+  `creation_date` date NOT NULL,
+  `delivery_id` int DEFAULT NULL,
+  PRIMARY KEY (`order_id`),
+  KEY `cl_id` (`cl_id`),
+  KEY `delivery_id` (`delivery_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cl_id`) REFERENCES `clients` (`cl_id`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`delivery_id`) REFERENCES `delivery` (`delivery_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,1,'2010-01-01',1),(2,2,'2020-03-02',1),(3,3,'2020-03-01',1),(4,4,'2020-06-02',1),(5,2,'2020-07-01',1),(6,3,'2020-08-01',1),(7,1,'2010-01-01',1),(8,2,'2020-02-02',1),(9,3,'2020-07-28',1),(10,2,'2020-02-03',1),(13,1,'2024-12-04',1),(14,1,'2024-12-04',2),(15,1,'2024-12-06',3),(16,1,'2024-12-06',4),(17,1,'2024-12-06',5),(18,1,'2024-12-06',6),(19,1,'2024-12-06',7),(20,1,'2024-12-06',8),(21,1,'2024-12-06',9),(22,1,'2024-12-06',10),(23,1,'2024-12-06',11),(24,1,'2024-12-06',12),(25,1,'2024-12-06',13),(26,1,'2024-12-06',14),(27,1,'2024-12-06',15),(28,1,'2024-12-06',16),(29,1,'2024-12-08',17),(30,1,'2024-12-08',18),(31,1,'2024-12-12',19),(32,1,'2024-12-12',20),(33,1,'2024-12-12',21),(34,1,'2024-12-13',22),(35,1,'2024-12-17',23),(36,1,'2024-12-19',24),(37,1,'2024-12-19',25),(38,1,'2024-12-19',26),(39,1,'2024-12-27',27);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-04-29 11:29:10
